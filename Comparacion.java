@@ -47,7 +47,7 @@ public class Comparacion implements Interface {
         }
     }
 
-    public void daMejor(String banderaA, String banderaB, String texto){
+    public void daMejor(String banderaA, String texto){
 
     }
 
@@ -56,7 +56,7 @@ public class Comparacion implements Interface {
     }
 
     public void daPonderada(){
-        
+
     }
 
 }
