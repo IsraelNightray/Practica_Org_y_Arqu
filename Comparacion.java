@@ -25,6 +25,7 @@ public class Comparacion {
             String linea = null;
 
             ArrayList<Double> mediasPonderadas = new ArrayList<Double>();
+            ArrayList<Double> mediasGeometricas = new ArrayList<Double>();
             // Lectura del texto
             try {
                 lector = new BufferedReader(new FileReader(texto));
@@ -46,11 +47,39 @@ public class Comparacion {
                 }
             }
 
-            System.out.println(calculo);
             switch (calculo) {
 
                 case "-g":
-                    System.out.println("Aquí haríamos la geo");
+                    Double multiplicados = 1.0;
+                    for (int i = 2; i < valores.size(); i++) {
+                        for (int j = 0; j < valores.get(i).length; j++) {
+                            multiplicados = multiplicados * Double.parseDouble(valores.get(i)[j]);
+                        }
+                        multiplicados = Math.pow(multiplicados, 1 / Double.parseDouble(valores.get(0)[1]));
+                        mediasGeometricas.add(multiplicados);
+                        multiplicados = 1.0;
+                    }
+
+                    double max = 0.0;
+                    double min = 0.0;
+                    for (Double media : mediasGeometricas) {
+                        if (media > max) {
+                            max = media;
+                        }
+                    }
+                    min = max;
+                    for (Double media : mediasGeometricas) {
+                        if (media < min) {
+                            min = media;
+                        }
+                    }
+
+                    if (medida.equals("-t")) {
+                        System.out.println("PC" + mediasGeometricas.indexOf(min));
+                    } else if (medida.equals("-r")) {
+                        System.out.println("PC" + mediasGeometricas.indexOf(max));
+                    }
+
                     break;
 
                 case "-p":
@@ -70,24 +99,24 @@ public class Comparacion {
                         ponderada = 0.0;
                     }
                     // Busca max y min en la lista generada anteriormente
-                    Double max = 0.0;
-                    Double min = 0.0;
+                    Double maxp = 0.0;
+                    Double minp = 0.0;
                     for (Double media : mediasPonderadas) {
-                        if (media > max) {
-                            max = media;
+                        if (media > maxp) {
+                            maxp = media;
                         }
                     }
-                    min = max;
+                    minp = maxp;
                     for (Double media : mediasPonderadas) {
-                        if (media < min) {
-                            min = media;
+                        if (media < minp) {
+                            minp = media;
                         }
                     }
-                    //Dependiendo de la bandera, regresa la PC 
+                    // Dependiendo de la bandera, regresa la PC
                     if (medida.equals("-t")) {
-                        System.out.println("PC" + mediasPonderadas.indexOf(min));
+                        System.out.println("PC" + mediasPonderadas.indexOf(minp));
                     } else if (medida.equals("-r")) {
-                        System.out.println("PC" + mediasPonderadas.indexOf(max));
+                        System.out.println("PC" + mediasPonderadas.indexOf(maxp));
                     }
                     break;
 
